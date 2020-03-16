@@ -1,23 +1,18 @@
 import React, {useState} from 'react';
-import { StyleSheet,Text, View, Button, TextInput, ScrollView, FlatList} from 'react-native';
+import { StyleSheet, View, Button, TextInput, FlatList} from 'react-native';
+import TodoItem from "./components/TodoItem";
+import TodoInput from "./components/TodoInput";
 
 export default function App() {
-  const [todo, setTodo] = useState('');
   const [todos, setTodos] = useState([]);
-  const todoInputHandler = todoText => setTodo(todoText);
-  const addTodoHandler = () => setTodos(prevTodos =>  [...prevTodos, {key:Math.random().toString(), text:todo}]);
+
+  const addTodoHandler = todo => setTodos(prevTodos =>  [...prevTodos, {key:Math.random().toString(), text:todo}]);
 
     return (
         <View style={styles.screen}>
-            <View style={styles.inputContainer}>
-                <TextInput placeholder="Add new todo..."
-                           style={styles.input}
-                           onChangeText={todoInputHandler}
-                />
-                <Button title="ADD" onPress={addTodoHandler}/>
-            </View>
+            <TodoInput onAddTodo={addTodoHandler}/>
             <FlatList data={todos}
-                      renderItem={data => <View style={styles.listItem}><Text>{data.item.text}</Text></View>}
+                      renderItem={data => <TodoItem text={data.item.text}/>}
             />
         </View>
 
@@ -27,7 +22,5 @@ export default function App() {
 const styles = StyleSheet.create({
   screen:{
     padding:50
-  },
-  inputContainer:{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'},
-  input:{width: '85%', borderColor: 'black', borderWidth: 1, padding: 10}, listItem:{padding:10, marginVertical:10, backgroundColor:'#ccc', borderColor:'black', borderWidth: 1}
+  }
 });
