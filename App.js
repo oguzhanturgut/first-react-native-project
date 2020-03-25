@@ -8,11 +8,15 @@ export default function App() {
   const [isAddMode, setIsAddMode] = useState(false);
 
   const addTodoHandler = todo => {
-    setTodos(prevTodos => [
-      ...prevTodos,
-      { id: Math.random().toString(), text: todo }
-    ]);
-    setIsAddMode(false);
+    if (todo.trim().length !== 0) {
+      setTodos(prevTodos => [
+        ...prevTodos,
+        { id: Math.random().toString(), text: todo }
+      ]);
+      setIsAddMode(false);
+    } else {
+      console.log("No Content");
+    }
   };
 
   const removeTodoHandler = id =>
